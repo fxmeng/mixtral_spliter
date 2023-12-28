@@ -5,7 +5,7 @@ import shutil
 from safetensors import safe_open
 from safetensors.torch import save_file
 
-def select_experts(experts_ids=(0,2), source_dir = "/home/mfx/code/huggingface/Mixtral-8x7B-Instruct-v0.1/", output_dir = "/home/mfx/code/huggingface/Mixtral-0_1"):
+def select_experts(experts_ids=(0,2), source_dir = "/home/mfx/code/huggingface/Mixtral-8x7B-Instruct-v0.1/", output_dir = "/home/mfx/code/huggingface/Mixtral-0_1", num_experts_per_tok=2):
     print("experts_ids: ", experts_ids)
     print("source_dir: ", source_dir)
     print("output_dir: ", output_dir)
@@ -19,7 +19,7 @@ def select_experts(experts_ids=(0,2), source_dir = "/home/mfx/code/huggingface/M
     assert len(set(experts_ids))==len(experts_ids)
     with open(os.path.join(source_dir, 'config.json'))as f:
         config = json.load(f)
-        config['num_experts_per_tok']=1
+        config['num_experts_per_tok']=num_experts_per_tok
         config['num_local_experts']=len(experts_ids)
     
     if not os.path.exists(output_dir):
