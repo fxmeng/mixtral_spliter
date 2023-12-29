@@ -5,7 +5,7 @@ import shutil
 from safetensors import safe_open
 from safetensors.torch import save_file
 
-def select_experts(experts_ids=(0,2), source_dir = "/home/mfx/code/huggingface/Mixtral-8x7B-Instruct-v0.1/", output_dir = "/home/mfx/code/huggingface/Mixtral-0_1", num_experts_per_tok=2):
+def select_experts(experts_ids, source_dir, output_dir, num_experts_per_tok=2):
     print("experts_ids: ", experts_ids)
     print("source_dir: ", source_dir)
     print("output_dir: ", output_dir)
