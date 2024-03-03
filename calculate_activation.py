@@ -6,7 +6,7 @@ from tqdm import tqdm
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from datasets import load_dataset
 
-def batch_infer(token_top1_expert, token_top2_expert, model, tokenizer, inputs):
+def infer_router_logits(token_top1_expert, token_top2_expert, model, tokenizer, inputs):
     for prompt in tqdm(inputs):
         encode_inputs = tokenizer(prompt, return_tensors="pt")
         input_ids = encode_inputs.input_ids.view(-1)
@@ -45,6 +45,6 @@ if __name__ == "__main__":
         token_top2_expert = torch.zeros(model.config.num_hidden_layers, model.config.vocab_size, model.config.num_local_experts,dtype=torch.long)
         if not os.path.exists(os.path.join(args.out_dir,task)):
             os.mkdir(os.path.join(args.out_dir,task))
-        token_top1_expert, token_top2_expert = batch_infer(token_top1_expert, token_top2_expert, model, tokenizer, dataset[task][args.text_field])
+        token_top1_expert, token_top2_expert = infer_router_logits(token_top1_expert, token_top2_expert, model, tokenizer, dataset[task][args.text_field])
         torch.save(token_top1_expert, os.path.join(args.out_dir,task,'token_top1_expert.pt'))
         torch.save(token_top2_expert, os.path.join(args.out_dir,task,'token_top2_expert.pt'))
