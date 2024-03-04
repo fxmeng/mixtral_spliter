@@ -17,5 +17,7 @@ For selecting expert 1 and expert 3, please use this command:
 ```
 python calculate_activation.py --ckpt_dir mistralai/Mixtral-8x7B-Instruct-v0.1 --data_dir fxmeng/airoboros --text_field conversations --out_dir output
 
+python reorder.py --source_dir mistralai/Mixtral-8x7B-Instruct-v0.1 --order_dir reorder.pt --output_dir Mixtral-8x7B-mmlu
+
 python select_experts.py  ---experts_ids 1,3 --source_dir $PATH/Mixtral-8x7B-v0.1 --output_dir $PATH/Mixtral-2x7B-v0.1
 ```
